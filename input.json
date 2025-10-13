@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "Input",
+  "type": "registry:ui",
+  "files": [
+    {
+      "path": "registry/rei/input.tsx",
+      "content": "import * as React from \"react\";\nimport { cn } from \"~/lib/utils\";\n\nexport interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}\n\nconst Input = React.forwardRef<HTMLInputElement, InputProps>(\n  ({ className, type = \"text\", ...props }, ref) => {\n    return (\n      <input\n        type={type}\n        className={cn(\n          \"flex h-9 w-full rounded-md border bg-transparent px-3 py-1.5 text-sm shadow-sm transition-colors\",\n          \"focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:border-ring\",\n          \"disabled:cursor-not-allowed disabled:opacity-50\",\n          \"aria-invalid:border-destructive aria-invalid:ring-destructive/50\",\n          className\n        )}\n        ref={ref}\n        {...props}\n      />\n    );\n  }\n);\nInput.displayName = \"Input\";\n\nexport { Input };\n",
+      "type": "registry:ui"
+    }
+  ]
+}
