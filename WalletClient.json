@@ -1,0 +1,13 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "WalletClient",
+  "type": "registry:file",
+  "files": [
+    {
+      "path": "registry/rei/wallet-client.ts",
+      "content": "import {\n  allowAllModules,\n  FREIGHTER_ID,\n  StellarWalletsKit,\n  WalletNetwork,\n} from \"@creit.tech/stellar-wallets-kit\";\n\n// Key used in localStorage for persisted wallet choice.\nconst SELECTED_WALLET_ID = \"selectedWalletId\";\n\nfunction isBrowser() {\n  return typeof window !== \"undefined\" && typeof document !== \"undefined\";\n}\n\nfunction getSelectedWalletId() {\n  if (!isBrowser()) return null;\n  try {\n    return localStorage.getItem(SELECTED_WALLET_ID);\n  } catch {\n    return null;\n  }\n}\n\n// Lazy, singleton kit instance created only in the browser.\nlet kit: StellarWalletsKit | null = null;\nfunction getKit() {\n  if (!isBrowser()) {\n    throw new Error(\"StellarWalletsKit accessed on the server\");\n  }\n  if (!kit) {\n    kit = new StellarWalletsKit({\n      modules: allowAllModules(),\n      network: WalletNetwork.TESTNET,\n      selectedWalletId: getSelectedWalletId() ?? FREIGHTER_ID,\n    });\n  }\n  return kit;\n}\n\nexport const signTransaction = (...args: any[]) => (getKit().signTransaction as any)(...args);\n\nexport async function getPublicKey() {\n  if (!isBrowser()) return null; // SSR always null\n  if (!getSelectedWalletId()) return null;\n  const { address } = await getKit().getAddress();\n  return address;\n}\n\nexport async function setWallet(walletId: string) {\n  if (!isBrowser()) return; // no-op on server\n  localStorage.setItem(SELECTED_WALLET_ID, walletId);\n  getKit().setWallet(walletId);\n}\n\nexport async function disconnect(callback?: () => Promise<void>) {\n  if (!isBrowser()) return; // no-op on server\n  localStorage.removeItem(SELECTED_WALLET_ID);\n  getKit().disconnect();\n  if (callback) await callback();\n}\n\nexport async function connect(callback?: () => Promise<void>) {\n  if (!isBrowser()) return; // no-op on server\n  await getKit().openModal({\n    onWalletSelected: async (option) => {\n      try {\n        await setWallet(option.id);\n        if (callback) await callback();\n      } catch (e) {\n        console.error(e);\n      }\n      return option.id;\n    },\n  });\n}\n",
+      "type": "registry:file",
+      "target": "~/app/config/wallet-client.ts"
+    }
+  ]
+}

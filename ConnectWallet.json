@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ConnectWallet",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "registry/rei/connect-wallet.ts",
+      "content": "import { useEffect, useState } from \"react\";\nimport { Button } from \"./ui/button\";\n\nimport { getPublicKey, connect, disconnect } from \"~/config/wallet-client\";\n\nexport function ConnectWallet() {\n  const [address, setAddress] = useState(\"-\");\n\n  async function updateAddress() {\n    const address = await getPublicKey();\n    if (address) {\n      setAddress(address);\n    } else {\n      setAddress(\"-\");\n    }\n  }\n\n  async function handleConnect() {\n    await connect(updateAddress);\n  }\n\n  async function handleDisconnect() {\n    await disconnect(updateAddress);\n  }\n\n  useEffect(() => {\n    // (async () => {\n    //   console.log(\"called bang\");\n    //   await updateAddress();\n    // })();\n    updateAddress();\n  }, []);\n\n  return (\n    <>\n      <div className=\"flex flex-col gap-4\">\n        <p>Address: {address}</p>\n        <Button onClick={handleConnect}>Connect</Button>\n        <Button onClick={handleDisconnect}>Disconnect</Button>\n      </div>\n    </>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ]
+}
