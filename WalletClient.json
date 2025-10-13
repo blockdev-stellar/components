@@ -2,6 +2,9 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "WalletClient",
   "type": "registry:file",
+  "dependencies": [
+    "@creit.tech/stellar-wallets-kit"
+  ],
   "files": [
     {
       "path": "registry/rei/wallet-client.ts",
