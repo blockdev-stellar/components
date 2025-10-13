@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "UseWallet",
+  "type": "registry:hook",
+  "files": [
+    {
+      "path": "registry/rei/use-wallet.ts",
+      "content": "import { useCallback, useEffect, useState } from \"react\";\nimport { getPublicKey, connect, disconnect } from \"~/config/wallet.client\";\n\nexport interface UseWalletOptions {\n  autoConnect?: boolean; // attempt to read existing wallet on mount\n}\n\nexport function useWallet(options: UseWalletOptions = {}) {\n  const { autoConnect = true } = options;\n  const [address, setAddress] = useState<string>(\"-\");\n  const isConnected = address !== \"-\";\n  const [loading, setLoading] = useState<boolean>(false);\n\n  const refresh = useCallback(async () => {\n    const pub = await getPublicKey();\n    setAddress(pub ?? \"-\");\n  }, []);\n\n  const handleConnect = useCallback(async () => {\n    setLoading(true);\n    await connect(refresh);\n    setLoading(false);\n  }, [refresh]);\n\n  const handleDisconnect = useCallback(async () => {\n    setLoading(true);\n    await disconnect(refresh);\n    setLoading(false);\n  }, [refresh]);\n\n  useEffect(() => {\n    if (autoConnect) {\n      void refresh();\n    }\n    // Listen for global wallet change events so multiple hook instances stay in sync.\n    const handler = () => void refresh();\n    if (typeof window !== \"undefined\") {\n      window.addEventListener(\"wallet:changed\", handler);\n    }\n    return () => {\n      if (typeof window !== \"undefined\") {\n        window.removeEventListener(\"wallet:changed\", handler);\n      }\n    };\n  }, [autoConnect, refresh]);\n\n  return {\n    address,\n    isConnected,\n    loading,\n    refresh,\n    connect: handleConnect,\n    disconnect: handleDisconnect,\n  } as const;\n}\n",
+      "type": "registry:hook"
+    }
+  ]
+}
