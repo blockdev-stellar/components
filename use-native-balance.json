@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-native-balance",
+  "type": "registry:hook",
+  "files": [
+    {
+      "path": "registry/rei/use-native-balance.ts",
+      "content": "import { useEffect, useState, useCallback } from \"react\";\nimport { getNativeBalance } from \"~/config/wallet.client\";\n\nexport function useNativeBalance(address: string) {\n  const [balance, setBalance] = useState<string>(\"-\");\n\n  const fetchBalance = useCallback(async () => {\n    if (!address || address === \"-\") {\n      setBalance(\"-\");\n      return;\n    }\n    const bal = await getNativeBalance();\n    setBalance(bal != null ? bal.toFixed(2) : \"0.00\");\n  }, [address]);\n\n  useEffect(() => {\n    let cancelled = false;\n    const run = async () => {\n      if (!address || address === \"-\") {\n        setBalance(\"-\");\n        return;\n      }\n      const bal = await getNativeBalance();\n      if (!cancelled) {\n        setBalance(bal != null ? bal.toFixed(2) : \"0.00\");\n      }\n    };\n    run();\n    console.log(\"changed balance\");\n    return () => {\n      cancelled = true;\n    };\n  }, [address]);\n\n  return { balance, refetch: fetchBalance } as const;\n}\n",
+      "type": "registry:hook"
+    }
+  ]
+}

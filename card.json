@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "Card",
+  "name": "card",
   "type": "registry:component",
   "files": [
     {

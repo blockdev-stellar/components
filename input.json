@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "Input",
+  "name": "input",
   "type": "registry:ui",
   "files": [
     {

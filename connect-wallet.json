@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "ConnectWallet",
+  "name": "connect-wallet",
   "type": "registry:component",
   "registryDependencies": [
     "dropdown-menu"

@@ -1,10 +1,12 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "Text-Rotate-Stellar-Blockdev",
+  "name": "text-rotate",
   "type": "registry:ui",
-  "title": "TextRotate",
+  "title": "text-rotate",
   "description": "Rotate text to idk",
-  "dependencies": ["motion"],
+  "dependencies": [
+    "motion"
+  ],
   "files": [
     {
       "path": "registry/rei/text-rotate.tsx",

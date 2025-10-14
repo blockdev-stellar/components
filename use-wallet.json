@@ -1,6 +1,6 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "UseWallet",
+  "name": "use-wallet",
   "type": "registry:hook",
   "files": [
     {
