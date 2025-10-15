@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "wallet-connection",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "registry/rei/tamagoreng/comp/wallet-connection.tsx",
+      "content": "import React from \"react\";\nimport { Button } from \"./ui/button\";\nimport { Wallet, LogOut, Loader2 } from \"lucide-react\";\nimport { useWallet } from \"~/hooks/use-wallet\";\n\nexport const WalletConnection: React.FC = () => {\n  const { address, connect, disconnect, isConnected, loading } = useWallet();\n\n  const truncateAddress = (address: string) => {\n    return `${address.slice(0, 6)}...${address.slice(-4)}`;\n  };\n\n  if (isConnected && address) {\n    return (\n      <div className=\"flex items-center gap-2 h-9\">\n        <div className=\"text-xs font-mono text-green-400 bg-green-900/20 px-2 py-2 rounded border border-green-500/30 h-9 flex items-center\">\n          {truncateAddress(address)}\n        </div>\n        <Button\n          onClick={disconnect}\n          variant=\"outline\"\n          size=\"sm\"\n          className=\"border-red-500/50 hover:border-red-400 hover:bg-red-500/10 h-9\"\n        >\n          <LogOut className=\"w-4 h-4\" />\n        </Button>\n      </div>\n    );\n  }\n\n  return (\n    <Button\n      onClick={connect}\n      disabled={loading}\n      size=\"sm\"\n      className=\"bg-blue-600 hover:bg-blue-700 text-white font-pixel h-9\"\n    >\n      {loading ? (\n        <>\n          <Loader2 className=\"w-4 h-4 animate-spin mr-2\" />\n          Connecting...\n        </>\n      ) : (\n        <>\n          <Wallet className=\"w-4 h-4 mr-2\" />\n          Connect Wallet\n        </>\n      )}\n    </Button>\n  );\n};\n",
+      "type": "registry:component"
+    }
+  ]
+}

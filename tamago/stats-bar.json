@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stats-bar",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "registry/rei/tamagoreng/comp/stats-bar.tsx",
+      "content": "import React from \"react\";\n\ninterface StatsBarProps {\n  label: string;\n  value: number;\n  icon: string;\n  color: \"hunger\" | \"happy\" | \"energy\";\n}\n\nexport function StatsBar({ label, value, icon, color }: StatsBarProps) {\n  const getBarColor = () => {\n    if (value > 60) {\n      return color === \"hunger\" ? \"bg-success\" : color === \"happy\" ? \"bg-accent\" : \"bg-secondary\";\n    }\n    if (value > 30) {\n      return \"bg-accent\";\n    }\n    return \"bg-destructive\";\n  };\n\n  return (\n    <div className=\"w-full space-y-1\">\n      <div className=\"flex items-center justify-between\">\n        <span className=\"text-[10px] sm:text-xs uppercase tracking-wide flex items-center gap-1\">\n          <span>{icon}</span>\n          <span className=\"hidden sm:inline\">{label}</span>\n        </span>\n        <span className=\"text-[10px] sm:text-xs font-bold\">{Math.round(value)}%</span>\n      </div>\n      <div className=\"relative h-4 sm:h-6 bg-muted border-2 border-border overflow-hidden\">\n        <div\n          className={`absolute inset-y-0 left-0 ${getBarColor()} transition-all duration-500 ease-out`}\n          style={{ width: `${value}%` }}\n        >\n          {/* Pixel pattern overlay */}\n          <div className=\"absolute inset-0 opacity-20\">\n            <svg width=\"100%\" height=\"100%\">\n              <pattern\n                id={`dots-${label}`}\n                x=\"0\"\n                y=\"0\"\n                width=\"8\"\n                height=\"8\"\n                patternUnits=\"userSpaceOnUse\"\n              >\n                <rect x=\"0\" y=\"0\" width=\"4\" height=\"4\" fill=\"currentColor\" />\n              </pattern>\n              <rect width=\"100%\" height=\"100%\" fill={`url(#dots-${label})`} />\n            </svg>\n          </div>\n        </div>\n      </div>\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ]
+}

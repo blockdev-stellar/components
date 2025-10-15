@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "header",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "registry/rei/tamagoreng/comp/header.tsx",
+      "content": "import React from \"react\";\nimport { useGame } from \"~/context/game-context\";\nimport { WalletConnection } from \"./wallet-connection\";\nimport { SyncButton } from \"./sync-button\";\n\nexport function Header() {\n  const { gameState } = useGame();\n\n  return (\n    <header className=\"w-full border-b-4 border-border bg-card pixel-shadow sticky top-0 z-10\">\n      <div className=\"container mx-auto px-4 py-3 sm:py-4\">\n        <div className=\"flex items-center justify-between\">\n          {/* Title */}\n          <div className=\"flex-1\">\n            <h1 className=\"text-sm sm:text-xl md:text-2xl font-bold pixel-text-shadow\">\n              🎮 PIXEL PET\n            </h1>\n          </div>\n\n          {/* Coins Display */}\n          <div className=\"flex items-center gap-2 sm:gap-4 h-9\">\n            <div className=\"flex items-center gap-1 sm:gap-2 bg-accent px-2 sm:px-4 py-2 border-2 border-border pixel-shadow hover:translate-y-1 h-9\">\n              <span className=\"text-xs sm:text-sm animate-coin\">💰</span>\n              <span className=\"text-xs sm:text-sm font-bold text-accent-foreground\">\n                {gameState.coins}\n              </span>\n            </div>\n\n            {/* Wallet Connection & Sync */}\n            <div className=\"hidden sm:flex items-center gap-2 h-9\">\n              <SyncButton />\n              <WalletConnection />\n            </div>\n          </div>\n        </div>\n      </div>\n    </header>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ]
+}

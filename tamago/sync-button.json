@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sync-button",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "registry/rei/tamagoreng/comp/sync-button.tsx",
+      "content": "import React from \"react\";\nimport { Button } from \"./ui/button\";\nimport { useGame } from \"~/context/game-context\";\nimport { RefreshCw, Loader2 } from \"lucide-react\";\nimport { useWallet } from \"~/hooks/use-wallet\";\n\nexport function SyncButton() {\n  const { syncWithBlockchain, isLoading } = useGame();\n  const { isConnected } = useWallet();\n\n  if (!isConnected) {\n    return null;\n  }\n\n  return (\n    <Button\n      onClick={syncWithBlockchain}\n      disabled={isLoading}\n      variant=\"outline\"\n      size=\"sm\"\n      className=\"border-blue-500/50 hover:border-blue-400 hover:bg-blue-500/10 h-9\"\n      title=\"Sync with Stellar blockchain\"\n    >\n      {isLoading ? <Loader2 className=\"w-4 h-4 animate-spin\" /> : <RefreshCw className=\"w-4 h-4\" />}\n    </Button>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ]
+}

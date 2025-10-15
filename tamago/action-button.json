@@ -1,0 +1,12 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "action-button",
+  "type": "registry:component",
+  "files": [
+    {
+      "path": "registry/rei/tamagoreng/comp/action-button.tsx",
+      "content": "import React from \"react\";\nimport { Button } from \"~/components/ui/button\";\nimport { useGame } from \"~/context/game-context\";\nimport { Utensils, Gamepad2, Briefcase, Moon } from \"lucide-react\";\n\nexport function ActionButtons() {\n  const { feedPet, playWithPet, workWithPet, putPetToSleep, gameState } = useGame();\n\n  const buttons = [\n    {\n      label: \"Feed\",\n      icon: Utensils,\n      action: feedPet,\n      variant: \"default\" as const,\n      disabled: gameState.isSleeping,\n    },\n    {\n      label: \"Play\",\n      icon: Gamepad2,\n      action: playWithPet,\n      variant: \"secondary\" as const,\n      disabled: gameState.isSleeping,\n    },\n    {\n      label: \"Work\",\n      icon: Briefcase,\n      action: workWithPet,\n      variant: \"outline\" as const,\n      disabled: gameState.isSleeping,\n    },\n    {\n      label: \"Sleep\",\n      icon: Moon,\n      action: putPetToSleep,\n      variant: \"outline\" as const,\n      disabled: gameState.isSleeping,\n    },\n  ];\n\n  return (\n    <div className=\"grid grid-cols-2 gap-3 w-full max-w-md\">\n      {buttons.map((btn) => (\n        <Button\n          key={btn.label}\n          onClick={btn.action}\n          disabled={btn.disabled}\n          variant={btn.variant}\n          size=\"lg\"\n          className=\"h-16 sm:h-20 flex flex-col items-center justify-center gap-1 pixel-shadow hover:translate-y-1 transition-transform disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm\"\n        >\n          <btn.icon className=\"h-5 w-5 sm:h-6 sm:w-6\" />\n          <span>{btn.label}</span>\n        </Button>\n      ))}\n    </div>\n  );\n}\n",
+      "type": "registry:component"
+    }
+  ]
+}
